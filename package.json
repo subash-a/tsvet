@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "./scripts/compile.sh",
+		"build": "tsc -p src",
 		"test": "node dist/index.js test/sample.ts"
 	},
 	"author": "",

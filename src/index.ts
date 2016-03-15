@@ -10,12 +10,8 @@ function compile(filenames: Array<string>, options: ts.CompilerOptions): void {
 	let tcheck = program.getTypeChecker();
 	let rootFiles = program.getRootFileNames();
 
-	console.log("Hello World");
-
 	rootFiles.forEach((val) => {
-		console.log("root file names");
 		const rootNode = program.getSourceFile(val);
-		console.log(`${rootNode}`);
 	});
 
 	allDiags.forEach(diagnostic => {
