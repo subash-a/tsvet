@@ -4,9 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"compile": "tsc -p src",
-		"start": "node dist/index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "./scripts/compile.sh",
+		"test": "node dist/index.js test/sample.ts"
 	},
 	"author": "",
 	"license": "ISC",
