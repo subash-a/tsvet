@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "jsx": "react",
+    "module": "system",
+    "newLine": "LF",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noLib": true,
+    "outDir": "./dist/",
+    "removeComments": false,
+    "rootDir": ".",
+    "sourceMap": true,
+    "target": "es5"
+  }
+}
