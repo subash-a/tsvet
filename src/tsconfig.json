@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": false,
     "jsx": "react",
-    "module": "system",
+    "module": "commonjs",
     "newLine": "LF",
     "noEmitOnError": true,
     "noImplicitAny": true,
