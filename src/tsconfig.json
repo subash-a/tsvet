@@ -8,7 +8,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noLib": true,
-    "outDir": "./dist/",
+    "outDir": "../dist/",
     "removeComments": false,
     "rootDir": ".",
     "sourceMap": true,
