@@ -1,3 +1,11 @@
+"use strict";
 function HelloWorld(msg) {
-    return "Hello World " + msg;
+    if (msg) {
+        return "Hello World Undefined";
+    }
+    if (msg === undefined) {
+        return "Hello World No Message";
+    }
+    return "Hello World Subash";
 }
+exports.HelloWorld = HelloWorld;

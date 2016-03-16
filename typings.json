@@ -1,5 +1,11 @@
 {
   "name": "tsvet",
   "version": false,
-  "dependencies": {}
+  "dependencies": {
+    "minimist": "registry:npm/minimist#1.0.0+20160229232932",
+    "typescript": "npm:typescript"
+  },
+  "ambientDependencies": {
+    "node": "registry:dt/node#4.0.0+20160316042000"
+  }
 }

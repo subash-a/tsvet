@@ -1,18 +1,22 @@
 {
-	"name": "tsvet",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"build": "tsc -p src",
-		"test": "node dist/index.js test/sample.ts"
-	},
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"typings": "^0.7.9"
-	},
-	"dependencies": {
-		"typescript": "^1.9.0-dev.20160315"
-	}
+  "name": "tsvet",
+  "version": "1.0.0",
+  "description": "custom linter and compiler for typescript code",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p src",
+    "test": "node dist/index.js test/sample.ts"
+  },
+  "author": "Modelogiq",
+  "license": "ISC",
+  "bin": {
+    "tsvet": "./dist/index.js"
+  },
+  "devDependencies": {
+    "typings": "^0.7.9"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "typescript": "^1.9.0-dev.20160315"
+  }
 }
