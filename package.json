@@ -1,7 +1,7 @@
 {
   "name": "tsvet",
   "version": "1.0.0",
-  "description": "custom linter and compiler for typescript code",
+  "description": "modified linter and compiler for typescript code",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p src",

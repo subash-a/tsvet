@@ -80,20 +80,64 @@ function testRule(sourceFile: ts.SourceFile, checker: ts.TypeChecker) {
 			checkIfExpression(<ts.IfStatement>child);
 		}
 		if(child.kind === ts.SyntaxKind.ArrowFunction) {
-			checkPromiseHandler(child);
+			checkPromiseHandler(<ts.ArrowFunction>child);
 		}
 	});
 
 	function checkIfExpression(node: ts.IfStatement) {
 		let stype = checker.getTypeAtLocation(node.expression);
-		// AND operation is performed since flags can be a combination of other type flags as well
 		if((stype.flags & ts.TypeFlags.Boolean) !== ts.TypeFlags.Boolean) {
 			reportError(node.expression, `If expression is not a boolean`);
 		}
 	}
 
-	function checkPromiseHandler(node: ts.Node) {
-		// Check type
+	function checkPromiseHandler(node: ts.ArrowFunction) {
+		node.parameters.forEach((p: ts.ParameterDeclaration) => {
+			let ptype = checker.getTypeAtLocation(p); // Can be made more specific by checking for second parameter
+			if(ptype.symbol.getName() === "Error") {
+				checkErrorHandler(<ts.Block>node.body, <ts.Declaration>ptype.symbol.valueDeclaration);
+			}
+		});
+	}
+
+	function checkErrorHandler(node: ts.Block, decl: ts.Declaration): void {
+		let errorHandled = false;
+		ts.forEachChild(node, child => {
+			// Complicated logic to check if an If statement exists for handling errors
+			// problem is they can be passed into a function as well which can handle the error
+			// or they can be throw again. Simple way to test is to check if the err identifier has been used
+			// in the function and that should be a decent indicator of if it has been handled.
+			// if(child.kind === ts.SyntaxKind.IfStatement) {
+			// 	let ifStatement = <ts.IfStatement>child;
+			// 	// Check if err is used and if expr says !=== or ===
+			// 	// if it says !== then block is a must
+			// 	// if it says === else block is a must
+			// 	let ifExpr = <ts.BinaryExpression>ifStatement.expression;
+			// 	if(ifExpr.getChildAt(0).kind === ts.SyntaxKind.Identifier) {
+			// 		if((<ts.Identifier>ifExpr.getChildAt(0)) === decl.name) {
+			// 			errorHandled = true;
+			// 		}
+			// 	} else if(ifExpr.getChildAt(2).kind === ts.SyntaxKind.Identifier) {
+			// 		if((<ts.Identifier>ifExpr.getChildAt(2)) === decl.name) {
+			// 			errorHandled = true;
+			// 		}
+			// 	}
+
+			// 	if(ifExpr.operatorToken.kind === ts.SyntaxKind.EqualsEqualsEqualsToken) {
+			// 		if(ifStatement.elseStatement === undefined) {
+			// 			reportError(ifStatement, "Else block is missing");
+			// 		}
+			// 	} else if(ifExpr.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken) {
+			// 		if(ifStatement.thenStatement === undefined) {
+			// 			reportError(ifStatement, "Then block is missing");
+			// 		}
+			// 	}
+			// }
+		});
+
+		if(errorHandled === false) {
+			reportError(node, "Error not handled");
+		}
 	}
 
 	function processChildNodes(root: ts.Node, processFn: (node: ts.Node) => void) {
@@ -120,6 +164,7 @@ options:
 		console.log(usage);
 		process.exit(1);
 	}
+
 	if(argv.watch === true) {
 		watch(argv._, {
 			noEmitOnError: true,
